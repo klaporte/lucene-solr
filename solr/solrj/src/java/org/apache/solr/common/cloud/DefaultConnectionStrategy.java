@@ -50,9 +50,10 @@ public class DefaultConnectionStrategy extends ZkClientConnectionStrategy {
   public void reconnect(final String serverAddress, final int zkClientTimeout,
       final Watcher watcher, final ZkUpdate updater) throws IOException {
     log.info("Connection expired - starting a new one...");
-    SolrZooKeeper zk = createSolrZooKeeper(serverAddress, zkClientTimeout, watcher);
+    SolrZooKeeper zk = null;
     boolean success = false;
     try {
+      zk = createSolrZooKeeper(serverAddress, zkClientTimeout, watcher);
       updater
           .update(zk);
       success = true;
